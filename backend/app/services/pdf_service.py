@@ -10,6 +10,7 @@ from app.core.config import settings
 from app.db.mongodb import get_database
 from app.models.pdf import PDFDocument
 from app.services.question_service import extract_and_store_questions
+from app.services.relationships import compute_and_store_relationships
 
 COLLECTION_NAME = "pdfs"
 
@@ -49,6 +50,7 @@ async def save_and_process_pdf(file: UploadFile) -> PDFDocument:
 
     original_filename = file.filename or stored_filename
     questions = await extract_and_store_questions(doc_id, file_path, original_filename)
+    await compute_and_store_relationships(questions)
 
     document = PDFDocument(
         id=doc_id,

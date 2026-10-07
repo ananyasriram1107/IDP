@@ -54,6 +54,14 @@ async def list_all_questions() -> list[Question]:
     ]
 
 
+async def get_question_by_id(question_id: str) -> Question | None:
+    db = get_database()
+    record = await db[COLLECTION_NAME].find_one({"_id": question_id})
+    if record is None:
+        return None
+    return Question(question_id=record["_id"], **{k: v for k, v in record.items() if k != "_id"})
+
+
 async def get_questions_for_pdf(pdf_id: str) -> list[Question]:
     db = get_database()
     cursor = db[COLLECTION_NAME].find({"pdf_id": pdf_id}).sort(
