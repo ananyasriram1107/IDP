@@ -1,0 +1,11 @@
+# Claude Code local session/tooling state
+.claude/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Node (in case frontend tooling is added later)
+node_modules/
