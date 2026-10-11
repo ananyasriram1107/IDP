@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PYQ · Explorer</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body data-page="pyq-explorer">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-mark">P</div>
+        <div>
+          <div class="sidebar-brand-title">PYQ</div>
+          <div class="sidebar-brand-subtitle">JEE preparation</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-link" data-nav-page="dashboard" href="dashboard.html">
+          <span class="sidebar-link-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          </span>
+          Dashboard
+        </a>
+        <a class="sidebar-link" data-nav-page="pyq-explorer" href="pyq-explorer.html">
+          <span class="sidebar-link-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          </span>
+          PYQ Explorer
+        </a>
+        <a class="sidebar-link" data-nav-page="practice" href="practice.html">
+          <span class="sidebar-link-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+          </span>
+          Practice
+        </a>
+        <a class="sidebar-link" data-nav-page="intelligence" href="intelligence.html">
+          <span class="sidebar-link-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/></svg>
+          </span>
+          AI Intelligence
+        </a>
+        <a class="sidebar-link" data-nav-page="progress" href="progress.html">
+          <span class="sidebar-link-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </span>
+          Progress
+        </a>
+        <a class="sidebar-link" data-nav-page="profile" href="profile.html">
+          <span class="sidebar-link-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 6-6 8-6s6.5 2 8 6"/></svg>
+          </span>
+          Profile
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="sidebar-user" href="profile.html">
+          <span class="sidebar-user-avatar" data-user-initials>?</span>
+          <span>
+            <div class="sidebar-user-name" data-user-name>there</div>
+            <div class="sidebar-user-target">Target: JEE Advanced</div>
+          </span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1 class="topbar-greeting">PYQ Explorer</h1>
+          <p class="topbar-subtitle">Browse and search every previous-year question in your library.</p>
+        </div>
+      </div>
+
+      <section class="card page-placeholder">
+        <h2>Question browsing is coming here</h2>
+        <p>
+          This page will list and filter every uploaded PYQ by subject, topic, difficulty,
+          and year. For now, use the API directly at <code>GET /questions</code> or
+          <code>GET /pdf/{id}/questions</code> to browse what's been uploaded.
+        </p>
+        <a class="btn btn-secondary" href="dashboard.html">Back to dashboard</a>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => window.PyqAuth.initProtectedPage());
+  </script>
+</body>
+</html>
