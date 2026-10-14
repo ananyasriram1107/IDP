@@ -17,7 +17,7 @@
   }
 
   function dashboardUrl() {
-    return isInPagesDir() ? "dashboard.html" : "pages/dashboard.html";
+    return isInPagesDir() ? "home.html" : "pages/home.html";
   }
 
   function getUserName() {

@@ -6,7 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.exam import router as exam_router
 from app.api.health import router as health_router
 from app.api.intelligence import router as intelligence_router
+from app.api.materials import router as materials_router
 from app.api.pdf import router as pdf_router
+from app.api.progress import router as progress_router
 from app.api.questions import router as questions_router
 from app.db.mongodb import mongodb
 
@@ -34,6 +36,8 @@ app.include_router(pdf_router)
 app.include_router(questions_router)
 app.include_router(exam_router)
 app.include_router(intelligence_router)
+app.include_router(materials_router)
+app.include_router(progress_router)
 
 
 @app.get("/")

@@ -3,6 +3,7 @@ from typing import Any
 
 from app.services.intelligence.tools.base import Tool
 from app.services.intelligence.tools.dna_lookup import dna_lookup_tool
+from app.services.intelligence.tools.material_search import material_search_tool
 from app.services.intelligence.tools.relationships_lookup import relationships_lookup_tool
 from app.services.intelligence.tools.semantic_search import semantic_search_tool
 from app.services.intelligence.tools.source_lookup import source_lookup_tool
@@ -16,6 +17,7 @@ ALL_TOOLS: list[Tool] = [
     relationships_lookup_tool,
     trends_lookup_tool,
     source_lookup_tool,
+    material_search_tool,
 ]
 
 TOOLS_BY_NAME: dict[str, Tool] = {tool.name: tool for tool in ALL_TOOLS}

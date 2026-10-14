@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PYQ · Learning World</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <link rel="stylesheet" href="../css/home.css" />
+</head>
+<body data-page="home">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-mark">P</div>
+        <div>
+          <div class="sidebar-brand-title">PYQ</div>
+          <div class="sidebar-brand-subtitle">JEE preparation</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-link" data-nav-page="home" href="home.html" data-tooltip="Learning World" aria-label="Learning World">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polygon points="16 8 14 14 8 16 10 10 16 8"/></svg>
+          </span>
+          <span class="sr-only">Learning World</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="materials" href="materials.html" data-tooltip="My Materials" aria-label="My Materials">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </span>
+          <span class="sr-only">My Materials</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="learn" href="learn.html" data-tooltip="Learn" aria-label="Learn">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/></svg>
+          </span>
+          <span class="sr-only">Learn</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="pyq-explorer" href="pyq-explorer.html" data-tooltip="PYQ Explorer" aria-label="PYQ Explorer">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          </span>
+          <span class="sr-only">PYQ Explorer</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="progress" href="progress.html" data-tooltip="My Progress" aria-label="My Progress">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </span>
+          <span class="sr-only">My Progress</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="sidebar-user" href="profile.html" data-tooltip="Profile" aria-label="Profile">
+          <span class="sidebar-user-avatar" data-user-initials>?</span>
+          <span class="sidebar-user-name sr-only" data-user-name>there</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="map-stage">
+        <div class="map-greeting-pill">
+          Good morning, <span data-user-greeting-name>there</span> &middot; drag to pan
+        </div>
+
+        <div class="map-viewport" id="mapViewport">
+          <div class="map-canvas" id="mapCanvas">
+            <img
+              id="mapImage"
+              class="map-image"
+              src="../assets/campusmap.png"
+              alt="Learning World campus map"
+              draggable="false"
+            />
+
+            <button class="map-hotspot map-hotspot--materials" data-zone="materials" style="left:14.5%; top:21%;" aria-label="Go to My Materials">
+              <span class="map-hotspot-marker map-hotspot-marker--pink">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <span class="map-hotspot-badge" data-badge-text="materials">...</span>
+              </span>
+              <span class="map-hotspot-label">My Materials</span>
+            </button>
+
+            <button class="map-hotspot map-hotspot--learn" data-zone="learn" style="left:49%; top:19%;" aria-label="Go to Learn">
+              <span class="map-hotspot-marker map-hotspot-marker--blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/></svg>
+                <span class="map-hotspot-badge" data-badge-text="learn">...</span>
+              </span>
+              <span class="map-hotspot-label">Learn</span>
+            </button>
+
+            <button class="map-hotspot map-hotspot--explorer" data-zone="explorer" style="left:80%; top:21%;" aria-label="Go to PYQ Explorer">
+              <span class="map-hotspot-marker map-hotspot-marker--yellow">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <span class="map-hotspot-badge" data-badge-text="explorer">...</span>
+              </span>
+              <span class="map-hotspot-label">PYQ Explorer</span>
+            </button>
+
+            <button class="map-hotspot map-hotspot--progress" data-zone="progress" style="left:76%; top:68%;" aria-label="Go to My Progress">
+              <span class="map-hotspot-marker map-hotspot-marker--sage">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+                <span class="map-hotspot-badge" data-badge-text="progress">...</span>
+              </span>
+              <span class="map-hotspot-label">My Progress</span>
+            </button>
+
+            <div class="map-avatar" id="mapAvatar" data-user-initials style="left:50%; top:46%;">?</div>
+
+            <div id="mapCheckpoints"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/home.js"></script>
+</body>
+</html>

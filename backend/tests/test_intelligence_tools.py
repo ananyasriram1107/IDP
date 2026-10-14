@@ -1,6 +1,7 @@
 import pytest
 
 import app.services.intelligence.tools.dna_lookup as dna_lookup
+import app.services.intelligence.tools.material_search as material_search
 import app.services.intelligence.tools.relationships_lookup as relationships_lookup
 import app.services.intelligence.tools.semantic_search as semantic_search
 import app.services.intelligence.tools.source_lookup as source_lookup
@@ -21,7 +22,7 @@ def _question(question_id: str, text: str = "sample text", **classification_kwar
     )
 
 
-def test_tool_registry_exposes_all_five_required_tools():
+def test_tool_registry_exposes_all_required_tools():
     specs = get_tool_specs()
     names = {spec["function"]["name"] for spec in specs}
     assert names == {
@@ -30,6 +31,7 @@ def test_tool_registry_exposes_all_five_required_tools():
         "question_relationships_lookup",
         "exam_trends_lookup",
         "question_source_lookup",
+        "study_material_search",
     }
     for spec in specs:
         assert spec["type"] == "function"
@@ -241,6 +243,56 @@ async def test_semantic_search_tool_truncates_oversized_question_text(monkeypatc
     returned_text = result["results"][0]["text"]
     assert len(returned_text) < len(huge_text)
     assert returned_text.endswith("...")
+
+
+@pytest.mark.asyncio
+async def test_material_search_tool_ranks_by_cosine_similarity(monkeypatch):
+    from app.models.material import StudyMaterial
+
+    material = StudyMaterial(
+        id="mat-1", original_filename="textbook.pdf", stored_filename="mat-1.pdf",
+        size_bytes=100, page_count=5, status="processed", uploaded_at="2024-01-01T00:00:00Z",
+    )
+
+    async def fake_ensure_material_embeddings_indexed(client):
+        return 0
+
+    async def fake_get_all_material_embeddings():
+        return {"mat-1:3": [1.0, 0.0], "mat-1:4": [0.0, 1.0]}
+
+    async def fake_embed(self, texts, model=None):
+        return [[1.0, 0.0]]
+
+    async def fake_get_chunk(material_id, page):
+        from app.models.material import MaterialChunk
+
+        return MaterialChunk(material_id=material_id, page=page, text=f"content of page {page}")
+
+    async def fake_get_material_by_id(material_id):
+        return material
+
+    monkeypatch.setattr(
+        material_search, "ensure_material_embeddings_indexed", fake_ensure_material_embeddings_indexed
+    )
+    monkeypatch.setattr(material_search, "get_all_material_embeddings", fake_get_all_material_embeddings)
+    monkeypatch.setattr(material_search.OllamaClient, "embed", fake_embed)
+    monkeypatch.setattr(material_search, "get_chunk", fake_get_chunk)
+    monkeypatch.setattr(material_search, "get_material_by_id", fake_get_material_by_id)
+
+    result = await material_search._handler({"query": "anything", "limit": 2})
+
+    assert result["results"][0]["page"] == 3
+    assert result["results"][0]["similarity"] == 1.0
+    assert result["results"][0]["file"] == "textbook.pdf"
+    assert result["results"][1]["page"] == 4
+    assert result["results"][1]["similarity"] == 0.0
+
+
+@pytest.mark.asyncio
+async def test_material_search_tool_requires_query():
+    result = await material_search._handler({"query": ""})
+    assert "error" in result
+    assert result["results"] == []
 
 
 @pytest.mark.asyncio

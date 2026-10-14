@@ -93,7 +93,7 @@
 
 .auth-error {
   display: none;
-  color: #b5452d;
+  color: var(--error);
   font-size: 12.5px;
   margin: -8px 0 14px;
 }

@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PYQ · Learn</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body data-page="learn">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-mark">P</div>
+        <div>
+          <div class="sidebar-brand-title">PYQ</div>
+          <div class="sidebar-brand-subtitle">JEE preparation</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-link" data-nav-page="home" href="home.html" data-tooltip="Learning World" aria-label="Learning World">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polygon points="16 8 14 14 8 16 10 10 16 8"/></svg>
+          </span>
+          <span class="sr-only">Learning World</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="materials" href="materials.html" data-tooltip="My Materials" aria-label="My Materials">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </span>
+          <span class="sr-only">My Materials</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="learn" href="learn.html" data-tooltip="Learn" aria-label="Learn">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4L12 3z"/></svg>
+          </span>
+          <span class="sr-only">Learn</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="pyq-explorer" href="pyq-explorer.html" data-tooltip="PYQ Explorer" aria-label="PYQ Explorer">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          </span>
+          <span class="sr-only">PYQ Explorer</span>
+        </a>
+        <a class="sidebar-link" data-nav-page="progress" href="progress.html" data-tooltip="My Progress" aria-label="My Progress">
+          <span class="sidebar-link-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          </span>
+          <span class="sr-only">My Progress</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="sidebar-user" href="profile.html" data-tooltip="Profile" aria-label="Profile">
+          <span class="sidebar-user-avatar" data-user-initials>?</span>
+          <span class="sidebar-user-name sr-only" data-user-name>there</span>
+        </a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1 class="topbar-greeting">Learn</h1>
+          <p class="topbar-subtitle">Teach Me, Flashcards, Quiz, and Ask a Tutor -- all grounded in your real PYQ and study-material data.</p>
+        </div>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab-button active" type="button" data-tab="teachme">Teach Me</button>
+        <button class="tab-button" type="button" data-tab="flashcards">Flashcards</button>
+        <button class="tab-button" type="button" data-tab="quiz">Quiz</button>
+        <button class="tab-button" type="button" data-tab="tutor">Ask a Tutor</button>
+      </div>
+
+      <!-- Teach Me -->
+      <section id="teachmePanel">
+        <div class="card">
+          <div class="card-header"><h3 class="card-title">Teach Me a topic</h3></div>
+          <p class="progress-card-subtitle" style="margin-top:-6px;">Explanations are grounded in your uploaded study materials (My Materials &rarr; Study Materials). If nothing relevant is uploaded, the tutor will say so.</p>
+          <form class="upload-form" id="teachMeForm">
+            <select class="filter-select" id="teachMeTopic" style="min-width:220px;">
+              <option value="">Choose a topic...</option>
+            </select>
+            <input class="filter-select" type="text" id="teachMeCustomTopic" placeholder="or type any topic" style="flex:1;min-width:180px;" />
+            <button class="btn btn-primary" type="submit" id="teachMeSubmit">Explain</button>
+          </form>
+          <p class="intelligence-status" id="teachMeStatus"></p>
+          <div class="intelligence-answer-box" id="teachMeAnswer" hidden>
+            <strong>Explanation</strong>
+            <p id="teachMeAnswerText"></p>
+          </div>
+        </div>
+        <section class="card" id="teachMeSourcesSection" style="margin-top:20px;" hidden>
+          <div class="card-header"><h3 class="card-title">Sources</h3></div>
+          <ul class="recent-list" id="teachMeSources"></ul>
+        </section>
+      </section>
+
+      <!-- Flashcards -->
+      <section id="flashcardsPanel" hidden>
+        <div class="filter-row">
+          <select class="filter-select" id="flashcardSubject"><option value="">All subjects</option></select>
+          <select class="filter-select" id="flashcardTopic"><option value="">All topics</option></select>
+          <button class="btn btn-secondary" type="button" id="flashcardLoadButton">Load flashcards</button>
+        </div>
+        <div class="card flashcard" id="flashcardCard" hidden>
+          <div class="flashcard-face" id="flashcardFace"></div>
+          <p class="flashcard-hint" id="flashcardHint">Click the card to flip</p>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px;" id="flashcardControls" hidden>
+          <button class="btn btn-secondary" type="button" id="flashcardPrev">&larr; Previous</button>
+          <button class="btn btn-secondary" type="button" id="flashcardNext">Next &rarr;</button>
+          <span class="intelligence-status" id="flashcardPosition" style="align-self:center;"></span>
+        </div>
+      </section>
+
+      <!-- Quiz -->
+      <section id="quizPanel" hidden>
+        <div class="card" id="quizSetup">
+          <div class="card-header"><h3 class="card-title">Set up a quiz</h3></div>
+          <div class="filter-row">
+            <select class="filter-select" id="quizSubject"><option value="">All subjects</option></select>
+            <select class="filter-select" id="quizTopic"><option value="">All topics</option></select>
+            <select class="filter-select" id="quizDifficulty">
+              <option value="">Any difficulty</option>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+            <select class="filter-select" id="quizCount">
+              <option value="5">5 questions</option>
+              <option value="10">10 questions</option>
+              <option value="15">15 questions</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="button" id="quizStartButton">Start quiz</button>
+          <p class="intelligence-status" id="quizSetupStatus"></p>
+        </div>
+
+        <div class="card" id="quizRunning" hidden>
+          <div class="card-header">
+            <h3 class="card-title" id="quizProgressLabel">Question 1 of 5</h3>
+            <span class="card-link" id="quizRunningScore">Score: 0</span>
+          </div>
+          <div id="quizDnaChips"></div>
+          <p id="quizQuestionText" style="font-size:14px;line-height:1.6;"></p>
+          <p style="color:var(--text-muted);font-size:12.5px;">There's no stored answer key for this question -- self-check your answer, then mark how you did.</p>
+          <div style="display:flex;gap:10px;margin-top:10px;">
+            <button class="btn btn-primary" type="button" id="quizMarkCorrect">I got it right</button>
+            <button class="btn btn-secondary" type="button" id="quizMarkIncorrect">I got it wrong</button>
+          </div>
+          <p class="quiz-feedback" id="quizFeedback"></p>
+        </div>
+
+        <div class="card" id="quizResults" hidden>
+          <div class="card-header"><h3 class="card-title">Quiz complete</h3></div>
+          <p class="quiz-score" id="quizFinalScore"></p>
+          <button class="btn btn-secondary" type="button" id="quizRestartButton">Set up another quiz</button>
+        </div>
+      </section>
+
+      <!-- Ask a Tutor (relocated from the old standalone AI Intelligence page) -->
+      <section id="tutorPanel" hidden>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Ask a tutor</h3>
+          </div>
+          <form class="intelligence-form" id="intelligenceForm">
+            <textarea
+              class="intelligence-textarea"
+              id="intelligenceQuery"
+              placeholder="e.g. Which Mechanics questions have appeared most often?"
+            ></textarea>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <button class="btn btn-primary" type="submit" id="intelligenceSubmit">Ask</button>
+              <span class="intelligence-status" id="intelligenceStatus"></span>
+            </div>
+          </form>
+
+          <div class="intelligence-answer-box" id="intelligenceAnswer" hidden>
+            <strong>Answer</strong>
+            <p id="intelligenceAnswerText"></p>
+          </div>
+        </div>
+
+        <section class="card" id="intelligenceSourcesSection" style="margin-top:20px;" hidden>
+          <div class="card-header">
+            <h3 class="card-title">Sources</h3>
+          </div>
+          <ul class="recent-list" id="intelligenceSources"></ul>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/learn.js"></script>
+</body>
+</html>

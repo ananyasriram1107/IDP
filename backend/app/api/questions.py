@@ -9,8 +9,13 @@ router = APIRouter(prefix="/questions", tags=["questions"])
 
 
 @router.get("", response_model=list[Question])
-async def get_questions() -> list[Question]:
-    return await list_all_questions()
+async def get_questions(
+    subject: str | None = None,
+    topic: str | None = None,
+    difficulty: str | None = None,
+    year: int | None = None,
+) -> list[Question]:
+    return await list_all_questions(subject=subject, topic=topic, difficulty=difficulty, year=year)
 
 
 @router.get("/{question_id}/related", response_model=list[RelatedQuestion])

@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     mongodb_url: str = "mongodb://localhost:27017"
     mongodb_db_name: str = "pyq_parser"
     upload_dir: str = "uploads"
+    materials_dir: str = "materials"
     max_upload_size_mb: int = 20
     classifier_backend: str = "rule_based"
     relationship_detector_backend: str = "rule_based"

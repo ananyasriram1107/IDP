@@ -1,25 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap");
+
 :root {
-  --bg: #f2efe9;
-  --surface: #ffffff;
-  --border: #e8e3d8;
-  --text: #211f1b;
-  --text-muted: #8a8477;
-  --text-soft: #57534a;
-  --accent: #1f1d1a;
+  --bg: #f5eedc;
+  --surface: #fffdf7;
+  --surface-soft: #fbf4e3;
+  --border: #e6dcc0;
+  --text: #3a3226;
+  --text-muted: #938a6e;
+  --text-soft: #5b5340;
+  --accent: #405a43;
+  --accent-soft: #8fa889;
+  --accent-soft-bg: rgba(143, 168, 137, 0.22);
   --accent-contrast: #ffffff;
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --radius-sm: 8px;
-  --shadow-card: 0 1px 2px rgba(33, 31, 27, 0.04);
+  --yellow: #f3d783;
+  --sky: #a9d0e8;
+  --pink: #e9b9c2;
+  --error: #c96a4e;
+  --success: #3f7a52;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --shadow-card: 0 8px 22px rgba(64, 90, 67, 0.09);
+
+  /* Floating nav toolbar: dark/translucent + muted gold, independent of
+     the light content palette above since it floats over every page. */
+  --toolbar-bg: rgba(19, 17, 13, 0.78);
+  --toolbar-border: rgba(201, 162, 77, 0.3);
+  --toolbar-icon: #efe6d2;
+  --toolbar-icon-muted: #a79c82;
+  --toolbar-gold: #c9a24d;
+  --toolbar-gold-glow: rgba(201, 162, 77, 0.55);
+  --toolbar-active-bg: rgba(201, 162, 77, 0.16);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Quicksand", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   background: var(--bg);
   color: var(--text);
 }
@@ -33,142 +58,187 @@ button {
   font-family: inherit;
 }
 
-/* App shell: fixed sidebar + scrollable main content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* App shell: .sidebar is now `position: fixed` (see below), taken
+   completely out of flow, so .main naturally fills 100% of the shell
+   on its own -- no layout math needed between the two. */
 .app-shell {
   display: flex;
   min-height: 100vh;
 }
 
+/* Floating bottom-center pill nav -- dark glass + muted gold, overlays
+   every page (light content pages and the dark map alike) rather than
+   reserving layout space. */
 .sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+  position: fixed;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: auto;
   display: flex;
-  flex-direction: column;
-  padding: 24px 16px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border-radius: 999px;
+  background: var(--toolbar-bg);
+  border: 1px solid var(--toolbar-border);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35), 0 2px 10px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 50;
 }
 
 .sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 8px 24px;
-}
-
-.sidebar-brand-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 9px;
-  background: var(--accent);
-  color: var(--accent-contrast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 13px;
-}
-
-.sidebar-brand-title {
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.2;
-}
-
-.sidebar-brand-subtitle {
-  font-size: 12px;
-  color: var(--text-muted);
+  display: none;
 }
 
 .sidebar-nav {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
-  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
 }
 
 .sidebar-link {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 14px;
-  color: var(--text-soft);
-  font-weight: 500;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--toolbar-icon-muted);
+  transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .sidebar-link:hover {
-  background: var(--bg);
+  background: rgba(239, 230, 210, 0.08);
+  color: var(--toolbar-icon);
 }
 
 .sidebar-link.active {
-  background: var(--accent);
-  color: var(--accent-contrast);
+  color: var(--toolbar-gold);
+  background: var(--toolbar-active-bg);
+  box-shadow: 0 0 0 1.5px var(--toolbar-gold), 0 0 16px var(--toolbar-gold-glow);
 }
 
 .sidebar-link-icon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
+/* Custom tooltip, shown above each icon (the nav is a horizontal
+   bottom bar now) on hover/focus. */
+.sidebar-link::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--toolbar-bg);
+  border: 1px solid var(--toolbar-border);
+  color: var(--toolbar-icon);
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 20;
+}
+
+.sidebar-link:hover::after,
+.sidebar-link:focus-visible::after {
+  opacity: 1;
+}
+
 .sidebar-footer {
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
-  margin-top: 16px;
+  display: flex;
+  align-items: center;
 }
 
 .sidebar-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 8px;
-  border-radius: var(--radius-sm);
-  width: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-}
-
-.sidebar-user:hover {
-  background: var(--bg);
-}
-
-.sidebar-user-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: var(--accent-contrast);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar-user::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--toolbar-bg);
+  border: 1px solid var(--toolbar-border);
+  color: var(--toolbar-icon);
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  z-index: 20;
+}
+
+.sidebar-user:hover::after,
+.sidebar-user:focus-visible::after {
+  opacity: 1;
+}
+
+.sidebar-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--toolbar-gold);
+  color: #1a1812;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
   font-weight: 700;
   flex-shrink: 0;
 }
 
-.sidebar-user-name {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.sidebar-user-target {
-  font-size: 11px;
-  color: var(--text-muted);
+/* Name/target text is kept for a11y and for the profile page's own
+   larger reuse of this markup, hidden only inside the floating pill. */
+.sidebar .sidebar-user-name,
+.sidebar .sidebar-user-target {
+  display: none;
 }
 
 .main {
   flex: 1;
-  padding: 28px 36px 48px;
+  padding: 28px 36px 120px;
   min-width: 0;
 }
 
@@ -209,7 +279,7 @@ button {
 }
 
 .icon-button:hover {
-  background: var(--bg);
+  background: var(--accent-soft-bg);
 }
 
 .card {
@@ -236,7 +306,7 @@ button {
 .card-link {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-soft);
+  color: var(--accent);
 }
 
 .card-link:hover {
@@ -267,10 +337,10 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: var(--radius-sm);
-  padding: 10px 18px;
+  border-radius: 999px;
+  padding: 10px 20px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   border: 1px solid transparent;
 }
@@ -281,7 +351,7 @@ button {
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background: #344b37;
 }
 
 .btn-secondary {
@@ -291,5 +361,40 @@ button {
 }
 
 .btn-secondary:hover {
-  background: var(--bg);
+  background: var(--accent-soft-bg);
+}
+
+/* Narrow screens: same floating pill everywhere, just a touch more
+   compact so it comfortably fits 6 items under ~420px. */
+@media (max-width: 700px) {
+  .sidebar {
+    bottom: 14px;
+    gap: 2px;
+    padding: 6px;
+  }
+
+  .sidebar-link,
+  .sidebar-user {
+    width: 38px;
+    height: 38px;
+  }
+
+  .sidebar-link-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sidebar-user-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .sidebar-link::after,
+  .sidebar-user::after {
+    display: none;
+  }
+
+  .main {
+    padding: 20px 16px 110px;
+  }
 }
